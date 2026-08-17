@@ -1,0 +1,16 @@
+{
+  "name": "omega-monorepo",
+  "private": true,
+  "packageManager": "npm@10.8.2",
+  "scripts": {
+    "build": "npm --prefix packages/frontend run build",
+    "dev": "npm --prefix packages/frontend run dev",
+    "lint": "npm --prefix packages/frontend run lint"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
