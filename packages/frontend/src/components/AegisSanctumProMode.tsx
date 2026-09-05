@@ -22,6 +22,7 @@ import {
   Crown
 } from 'lucide-react';
 import CleanQueensMaintenance from './CleanQueensMaintenance';
+import AegisArmyBouncerIntercom from './AegisArmyBouncerIntercom';
 
 interface SecurityAgent {
   id: string;
@@ -323,6 +324,13 @@ export default function AegisSanctumProMode() {
             </div>
           </div>
         </div>
+
+        {/* 'Aegis Army' AI Bouncer & Struggle Radar Intercom */}
+        <AegisArmyBouncerIntercom 
+          distressModeActive={distressModeActive}
+          onToggleDistressMode={toggleDistressMode}
+          onLogMessage={(msg) => setLogs((prev) => [msg, ...prev.slice(0, 5)])}
+        />
 
         {/* Clean Queens Routine Maintenance & VannÐiamond Palladium Standard / €coÐ€X Securities */}
         <div className="mt-10">

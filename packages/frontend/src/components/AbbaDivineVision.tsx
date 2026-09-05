@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Sparkles, BookOpen, Crown, Heart, Flame } from 'lucide-react';
+import PrayerWall from './PrayerWall';
 
 export default function AbbaDivineVision() {
   const visionPillars = [
@@ -109,6 +110,9 @@ export default function AbbaDivineVision() {
               </span>
             </div>
           </div>
+
+          {/* ABBA Covenant Prayer Wall: Anonymous Prayer Petitions & Answered Praise Reports */}
+          <PrayerWall />
 
         </div>
       </div>

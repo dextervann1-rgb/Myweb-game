@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { Shield, Sparkles, Menu, X, Wallet, ChevronRight, Trophy, Star, BookOpen, Award } from 'lucide-react';
+import { Shield, Sparkles, Menu, X, Wallet, ChevronRight, Trophy, Star, BookOpen, Award, Heart } from 'lucide-react';
 import SurvivorStatusBadge from './SurvivorStatusBadge';
 
 interface NavbarProps {
@@ -110,6 +110,13 @@ export default function Navbar({ onEnterRealm }: NavbarProps) {
           >
             <Star className="w-3.5 h-3.5 fill-[#D4AF37] text-[#D4AF37]" />
             RATINGS
+          </button>
+          <button 
+            onClick={() => handleNavClick('prayer-wall')} 
+            className="hover:text-[#F3E5AB] text-[#D4AF37] font-bold transition-colors cursor-pointer uppercase flex items-center gap-1"
+          >
+            <Heart className="w-3.5 h-3.5 text-[#D4AF37]" />
+            PRAYER WALL
           </button>
           <button 
             onClick={() => handleNavClick('deploy-guide')} 
@@ -231,6 +238,12 @@ export default function Navbar({ onEnterRealm }: NavbarProps) {
             className="text-left py-2 text-[#D4AF37] hover:text-[#F3E5AB] transition-colors border-b border-[#F5F1E8]/10 flex items-center gap-2"
           >
             <Star className="w-4 h-4 fill-[#D4AF37] text-[#D4AF37]" /> PILGRIM RATINGS & REVIEWS
+          </button>
+          <button
+            onClick={() => handleNavClick('prayer-wall')}
+            className="text-left py-2 text-[#F3E5AB] hover:text-[#D4AF37] transition-colors border-b border-[#F5F1E8]/10 flex items-center gap-2"
+          >
+            <Heart className="w-4 h-4 text-[#D4AF37]" /> ABBA PRAYER WALL &amp; PRAISE REPORTS
           </button>
           <button
             onClick={() => handleNavClick('deploy-guide')}

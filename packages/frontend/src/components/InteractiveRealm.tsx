@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect, useWriteContract, useReadContract } from 'wagmi';
-import { Shield, Swords, Terminal, Wallet, Sparkles, Check, Flame, Trophy, PartyPopper, Volume2, VolumeX } from 'lucide-react';
+import { Shield, Swords, Terminal, Wallet, Sparkles, Check, Flame, Trophy, PartyPopper, Volume2, VolumeX, Bot, ShieldAlert, LifeBuoy } from 'lucide-react';
 import DynamicDexDashboard from './DynamicDexDashboard';
 import GoldConfettiCelebration from './GoldConfettiCelebration';
 import { useTriumphantSound } from '../hooks/useTriumphantSound';
@@ -365,6 +365,33 @@ export default function InteractiveRealm() {
                     <Sparkles className="w-3.5 h-3.5 text-[#FFD700]" />
                     <span>CELEBRATE MINT (GOLD SHOWER)</span>
                   </button>
+
+                  {/* Aegis Army AI Bouncer Real-Time Distress Alert Callout */}
+                  <div className="p-3 rounded-xl bg-gradient-to-r from-[#0052FF]/15 via-[#080B14] to-[#A855F7]/15 border border-[#0052FF]/40 text-[11px] font-mono space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#60A5FA] font-bold flex items-center gap-1.5 uppercase text-[10px]">
+                        <Bot className="w-3.5 h-3.5 text-[#60A5FA]" />
+                        AEGIS ARMY AI SENTRY: LIVE
+                      </span>
+                      <span className="text-[#10B981] text-[9px] px-1.5 py-0.5 rounded bg-[#10B981]/20 font-bold">
+                        SMART-TO-SAFE
+                      </span>
+                    </div>
+                    <p className="text-[#F5F1E8]/70 text-[10px] font-sans">
+                      Struggling with the sudden death clock, gas spikes, or score deficits in Cycle 0?
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const el = document.getElementById('aegis-sanctum');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="w-full py-1 px-2 rounded-lg bg-[#0052FF]/25 hover:bg-[#0052FF] text-[#93C5FD] hover:text-white font-bold text-[10px] uppercase transition-all flex items-center justify-center gap-1 cursor-pointer border border-[#0052FF]/50"
+                    >
+                      <LifeBuoy className="w-3 h-3" />
+                      <span>OPEN BOUNCER INTERCOM &amp; DISTRESS RADAR ↗</span>
+                    </button>
+                  </div>
 
                   <p className="text-[10px] text-[#F5F1E8]/50 text-center font-sans">
                     Small protocol fee auto-attached on Base Mainnet. 10% auto-funds Kingdom missions.
