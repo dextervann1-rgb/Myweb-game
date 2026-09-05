@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect, useWriteContract, useReadContract } from 'wagmi';
-import { Shield, Swords, Terminal, Wallet, Sparkles, Check, Flame, Trophy } from 'lucide-react';
+import { Shield, Swords, Terminal, Wallet, Sparkles, Check, Flame, Trophy, PartyPopper } from 'lucide-react';
 import DynamicDexDashboard from './DynamicDexDashboard';
+import GoldConfettiCelebration from './GoldConfettiCelebration';
 
 const GAME_CONTRACT_ABI = [
   {
@@ -74,6 +75,31 @@ export default function InteractiveRealm() {
 
   const [selectedClass, setSelectedClass] = useState<string>('warrior');
   const [newScoreInput, setNewScoreInput] = useState<string>('100');
+  const [celebrationActive, setCelebrationActive] = useState<boolean>(false);
+  const [simulatedTxHash, setSimulatedTxHash] = useState<string | null>(null);
+
+  const selectedSurvivorClass = SURVIVOR_CLASSES.find((c) => c.id === selectedClass) || SURVIVOR_CLASSES[0];
+
+  // Auto-trigger celebratory gold confetti shower when transaction hash is confirmed
+  useEffect(() => {
+    if (hash) {
+      setCelebrationActive(true);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('omega_minted_survivor', 'true');
+      }
+    }
+  }, [hash]);
+
+  const triggerCelebration = (isSimulated = false) => {
+    if (isSimulated || !hash) {
+      const mockHash = `0x${Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('')}`;
+      setSimulatedTxHash(mockHash);
+    }
+    setCelebrationActive(true);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('omega_minted_survivor', 'true');
+    }
+  };
 
   const { data: currentScore, refetch: refetchScore } = useReadContract({
     address: GAME_CONTRACT_ADDRESS,
@@ -105,7 +131,16 @@ export default function InteractiveRealm() {
   const formattedFee = playFee ? (Number(playFee) / 1e18).toFixed(4) : '0.0001';
 
   return (
-    <section id="play-alpha" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="play-alpha" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
+      {/* Celebratory Gold Confetti Shower Animation */}
+      <GoldConfettiCelebration
+        isActive={celebrationActive}
+        onClose={() => setCelebrationActive(false)}
+        survivorClass={selectedSurvivorClass}
+        txHash={hash || simulatedTxHash}
+        score={newScoreInput}
+      />
+
       <div className="rounded-3xl bg-[#090D16] border-2 border-[#D4AF37]/50 p-6 sm:p-10 lg:p-12 gold-border-glow space-y-10">
         
         {/* Terminal Header */}
@@ -123,7 +158,16 @@ export default function InteractiveRealm() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => triggerCelebration(true)}
+              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#FFD700]/10 hover:from-[#D4AF37]/30 hover:to-[#FFD700]/20 border border-[#D4AF37]/60 text-xs font-mono font-bold text-[#F3E5AB] uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer shadow-[0_0_15px_rgba(212,175,55,0.2)]"
+              title="Preview celebratory gold shower"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#FFD700]" />
+              <span>TEST MINT SHOWER</span>
+            </button>
             <div className="px-4 py-2 rounded-xl bg-[#080B12] border border-[#0052FF]/40 text-left">
               <p className="text-[10px] font-mono text-[#F5F1E8]/50 uppercase">NETWORK</p>
               <p className="text-xs font-mono font-bold text-[#60A5FA]">BASE MAINNET</p>
@@ -158,6 +202,18 @@ export default function InteractiveRealm() {
                   <span>Connect {connector.name}</span>
                 </button>
               ))}
+            </div>
+
+            {/* Instant Test Preview for Mint Celebration */}
+            <div className="pt-2 border-t border-[#F5F1E8]/10">
+              <button
+                type="button"
+                onClick={() => triggerCelebration(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 via-[#FFD700]/15 to-[#D4AF37]/20 hover:from-[#D4AF37]/30 hover:to-[#FFD700]/30 border border-[#D4AF37]/60 text-xs font-mono font-bold text-[#F3E5AB] uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(212,175,55,0.2)] cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-[#FFD700]" />
+                <span>PREVIEW SURVIVOR MINT (GOLD CONFETTI SHOWER)</span>
+              </button>
             </div>
           </div>
         ) : (
@@ -259,28 +315,47 @@ export default function InteractiveRealm() {
                     )}
                   </button>
 
+                  <button
+                    type="button"
+                    onClick={() => triggerCelebration(true)}
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#090D16] hover:bg-[#111624] border border-[#D4AF37]/50 hover:border-[#D4AF37] text-[#F3E5AB] font-mono text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-[#FFD700]" />
+                    <span>CELEBRATE MINT (GOLD SHOWER)</span>
+                  </button>
+
                   <p className="text-[10px] text-[#F5F1E8]/50 text-center font-sans">
                     Small protocol fee auto-attached on Base Mainnet. 10% auto-funds Kingdom missions.
                   </p>
 
                   {hash && (
-                    <div className="p-3 rounded-lg bg-[#10B981]/10 border border-[#10B981]/40 text-center text-xs font-mono text-[#10B981] space-y-1">
+                    <div className="p-3 rounded-lg bg-[#10B981]/10 border border-[#10B981]/40 text-center text-xs font-mono text-[#10B981] space-y-2">
                       <p className="font-bold flex items-center justify-center gap-1 text-[#10B981]">
                         <Check className="w-4 h-4" /> Survivor Sealed on Base Mainnet!
                       </p>
-                      <a
-                        href={`https://basescan.org/tx/${hash}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="underline text-[#60A5FA] break-all block"
-                        onClick={() => {
-                          if (typeof window !== 'undefined') {
-                            localStorage.setItem('omega_minted_survivor', 'true');
-                          }
-                        }}
-                      >
-                        View on BaseScan ↗
-                      </a>
+                      <div className="flex items-center justify-center gap-3 flex-wrap">
+                        <a
+                          href={`https://basescan.org/tx/${hash}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="underline text-[#60A5FA] block"
+                          onClick={() => {
+                            if (typeof window !== 'undefined') {
+                              localStorage.setItem('omega_minted_survivor', 'true');
+                            }
+                          }}
+                        >
+                          View on BaseScan ↗
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => triggerCelebration(false)}
+                          className="px-2.5 py-0.5 rounded bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 border border-[#D4AF37]/50 text-[10px] font-mono font-bold text-[#F3E5AB] uppercase inline-flex items-center gap-1 cursor-pointer"
+                        >
+                          <Sparkles className="w-3 h-3 text-[#FFD700]" />
+                          <span>Replay Shower</span>
+                        </button>
+                      </div>
                     </div>
                   )}
 
