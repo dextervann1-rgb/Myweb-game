@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect, useWriteContract, useReadContract } from 'wagmi';
-import { Shield, Swords, Terminal, Wallet, Sparkles, Check, Flame, Trophy, PartyPopper } from 'lucide-react';
+import { Shield, Swords, Terminal, Wallet, Sparkles, Check, Flame, Trophy, PartyPopper, Volume2, VolumeX } from 'lucide-react';
 import DynamicDexDashboard from './DynamicDexDashboard';
 import GoldConfettiCelebration from './GoldConfettiCelebration';
+import { useTriumphantSound } from '../hooks/useTriumphantSound';
 
 const GAME_CONTRACT_ABI = [
   {
@@ -78,17 +79,27 @@ export default function InteractiveRealm() {
   const [celebrationActive, setCelebrationActive] = useState<boolean>(false);
   const [simulatedTxHash, setSimulatedTxHash] = useState<string | null>(null);
 
+  // Audio Hook: Plays triumphant fanfare sound effect on successful mint celebration
+  const {
+    playTriumphantSound,
+    stopSound,
+    isPlaying: isSoundPlaying,
+    isMuted,
+    toggleMute,
+  } = useTriumphantSound();
+
   const selectedSurvivorClass = SURVIVOR_CLASSES.find((c) => c.id === selectedClass) || SURVIVOR_CLASSES[0];
 
-  // Auto-trigger celebratory gold confetti shower when transaction hash is confirmed
+  // Auto-trigger celebratory gold confetti shower and audio fanfare when transaction hash is confirmed
   useEffect(() => {
     if (hash) {
       setCelebrationActive(true);
+      playTriumphantSound();
       if (typeof window !== 'undefined') {
         localStorage.setItem('omega_minted_survivor', 'true');
       }
     }
-  }, [hash]);
+  }, [hash, playTriumphantSound]);
 
   const triggerCelebration = (isSimulated = false) => {
     if (isSimulated || !hash) {
@@ -96,6 +107,7 @@ export default function InteractiveRealm() {
       setSimulatedTxHash(mockHash);
     }
     setCelebrationActive(true);
+    playTriumphantSound();
     if (typeof window !== 'undefined') {
       localStorage.setItem('omega_minted_survivor', 'true');
     }
@@ -132,13 +144,19 @@ export default function InteractiveRealm() {
 
   return (
     <section id="play-alpha" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
-      {/* Celebratory Gold Confetti Shower Animation */}
+      {/* Celebratory Gold Confetti Shower Animation with Triumphant Sound Effect */}
       <GoldConfettiCelebration
         isActive={celebrationActive}
-        onClose={() => setCelebrationActive(false)}
+        onClose={() => {
+          setCelebrationActive(false);
+          stopSound();
+        }}
         survivorClass={selectedSurvivorClass}
         txHash={hash || simulatedTxHash}
         score={newScoreInput}
+        onPlaySound={playTriumphantSound}
+        isMuted={isMuted}
+        toggleMute={toggleMute}
       />
 
       <div className="rounded-3xl bg-[#090D16] border-2 border-[#D4AF37]/50 p-6 sm:p-10 lg:p-12 gold-border-glow space-y-10">
@@ -159,11 +177,35 @@ export default function InteractiveRealm() {
           </div>
 
           <div className="flex items-center flex-wrap gap-3">
+            {/* Audio Fanfare Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleMute}
+              className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center gap-1.5 text-xs font-mono font-bold ${
+                isMuted
+                  ? 'bg-[#080B12] border-[#F5F1E8]/20 text-[#F5F1E8]/50 hover:text-white'
+                  : 'bg-[#D4AF37]/15 border-[#D4AF37]/50 text-[#F3E5AB] hover:bg-[#D4AF37]/25 shadow-[0_0_12px_rgba(212,175,55,0.2)]'
+              }`}
+              title={isMuted ? "Sound effect muted (Click to enable fanfare)" : "Sound effect active (Click to mute)"}
+            >
+              {isMuted ? (
+                <>
+                  <VolumeX className="w-4 h-4 text-red-400" />
+                  <span className="hidden sm:inline">MUTED</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-4 h-4 text-[#FFD700]" />
+                  <span className="hidden sm:inline">FANFARE ON</span>
+                </>
+              )}
+            </button>
+
             <button
               type="button"
               onClick={() => triggerCelebration(true)}
               className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#FFD700]/10 hover:from-[#D4AF37]/30 hover:to-[#FFD700]/20 border border-[#D4AF37]/60 text-xs font-mono font-bold text-[#F3E5AB] uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer shadow-[0_0_15px_rgba(212,175,55,0.2)]"
-              title="Preview celebratory gold shower"
+              title="Preview celebratory gold shower with triumphant sound effect"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#FFD700]" />
               <span>TEST MINT SHOWER</span>

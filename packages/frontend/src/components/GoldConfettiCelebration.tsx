@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Sparkles, Crown, CheckCircle2, Trophy, ExternalLink, X, RotateCcw, Shield } from 'lucide-react';
+import { Sparkles, Crown, CheckCircle2, Trophy, ExternalLink, X, RotateCcw, Shield, Volume2, VolumeX } from 'lucide-react';
 
 interface GoldConfettiCelebrationProps {
   isActive: boolean;
@@ -13,6 +13,9 @@ interface GoldConfettiCelebrationProps {
   };
   txHash?: string | null;
   score?: string | number;
+  onPlaySound?: () => void;
+  isMuted?: boolean;
+  toggleMute?: () => void;
 }
 
 interface ConfettiParticle {
@@ -49,14 +52,27 @@ export default function GoldConfettiCelebration({
   survivorClass,
   txHash,
   score,
+  onPlaySound,
+  isMuted = false,
+  toggleMute,
 }: GoldConfettiCelebrationProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const particlesRef = useRef<ConfettiParticle[]>([]);
   const [showModal, setShowModal] = useState(false);
 
-  // Play an optional ethereal, pleasant celestial chord using Web Audio API
+  // Sound trigger invoking the audio hook or fallback
+  const triggerAudio = useCallback(() => {
+    if (onPlaySound) {
+      onPlaySound();
+    } else {
+      playCelestialFanfare();
+    }
+  }, [onPlaySound]);
+
+  // Fallback pleasant celestial chord using Web Audio API if no external hook is passed
   const playCelestialFanfare = useCallback(() => {
+    if (isMuted) return;
     try {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (!AudioCtx) return;
@@ -89,7 +105,7 @@ export default function GoldConfettiCelebration({
     } catch {
       // Audio autoplay policy or unsupported environment handled gracefully
     }
-  }, []);
+  }, [isMuted]);
 
   // Initialize and spawn particles
   const initParticles = useCallback((width: number, height: number) => {
@@ -135,7 +151,7 @@ export default function GoldConfettiCelebration({
     }
 
     setShowModal(true);
-    playCelestialFanfare();
+    triggerAudio();
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -242,12 +258,12 @@ export default function GoldConfettiCelebration({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isActive, initParticles, playCelestialFanfare]);
+  }, [isActive, initParticles, triggerAudio]);
 
   const handleReplay = () => {
     if (canvasRef.current) {
       initParticles(canvasRef.current.width, canvasRef.current.height);
-      playCelestialFanfare();
+      triggerAudio();
     }
   };
 
@@ -274,6 +290,23 @@ export default function GoldConfettiCelebration({
           className="relative z-10 max-w-lg w-full rounded-3xl bg-gradient-to-b from-[#141A2E] via-[#0A0E1A] to-[#06080F] border-2 border-[#D4AF37] p-6 sm:p-8 shadow-[0_0_80px_rgba(212,175,55,0.45)] text-center space-y-6 animate-in fade-in zoom-in-95 duration-300"
           onClick={(e) => e.stopPropagation()}
         >
+          {/* Audio Mute/Unmute Toggle */}
+          {toggleMute && (
+            <button
+              type="button"
+              onClick={toggleMute}
+              className={`absolute top-4 right-14 p-2 rounded-full border transition-all cursor-pointer ${
+                isMuted
+                  ? 'bg-[#080B12] border-[#F5F1E8]/20 text-[#F5F1E8]/40 hover:text-white'
+                  : 'bg-[#D4AF37]/20 border-[#D4AF37]/50 text-[#F3E5AB] hover:bg-[#D4AF37]/30'
+              }`}
+              aria-label={isMuted ? "Unmute triumphant fanfare" : "Mute triumphant fanfare"}
+              title={isMuted ? "Unmute triumphant fanfare" : "Mute audio"}
+            >
+              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#FFD700]" />}
+            </button>
+          )}
+
           {/* Top Close Icon */}
           <button
             onClick={onClose}
