@@ -81,6 +81,17 @@ const AGENTS_ARMY: SecurityAgent[] = [
     iconName: 'Cpu',
   },
   {
+    id: 'samantha-ai',
+    name: 'Samantha AI',
+    codename: 'SOVEREIGN_VOICE_GUARDIAN',
+    role: 'Conversational Voice & Live Intelligence Guardian',
+    status: 'ACTIVE_SHIELD',
+    pingMs: 2,
+    description: 'Guards real-time voice conversations and live intelligence feeds. Directs adaptive dialogue, answers player queries, and keeps the channel pristine.',
+    badgeColor: '#EC4899',
+    iconName: 'Sparkles',
+  },
+  {
     id: 'marine-ai-scout',
     name: 'Marine Scout AI',
     codename: 'SWIFT_PATHFINDER_4',
@@ -102,7 +113,8 @@ export default function AegisSanctumProMode() {
     "[05:04:12] BFF-DEX-AI Bouncer: Wallet Waiting Room initialized (Zero-Drain Guard active)",
     "[05:04:15] POA Maddy May: Heartbeat synced. Screen timeout protection: ONLINE",
     "[05:04:18] VannAI-DLP: Session state memory locked & encrypted",
-    "[05:04:21] Marine Scout: Pre-flight perimeter check completed. Warning level: Ɓ€€4 Normal",
+    "[05:04:20] Samantha AI: Conversational voice bridge & live neural stream: ENGAGED",
+    "[05:04:23] Marine Scout: Pre-flight perimeter check completed. Warning level: Ɓ€€4 Normal",
   ]);
 
   // Radar animation & queue timer effect
@@ -220,7 +232,7 @@ export default function AegisSanctumProMode() {
           </div>
         </div>
 
-        {/* 5 AI Agents Army Grid */}
+        {/* 6 AI Agents Army Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-8">
           {AGENTS_ARMY.map((agent) => (
             <div

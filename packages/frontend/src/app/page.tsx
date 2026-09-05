@@ -10,6 +10,7 @@ import CovenantSection from "@/components/CovenantSection";
 import RoadmapSection from "@/components/RoadmapSection";
 import InteractiveRealm from "@/components/InteractiveRealm";
 import LeaderboardSection from "@/components/LeaderboardSection";
+import SurvivorStories from "@/components/SurvivorStories";
 import DeployGuideSection from "@/components/DeployGuideSection";
 import CompetitionAndSupport from "@/components/CompetitionAndSupport";
 import AegisSanctumProMode from "@/components/AegisSanctumProMode";
@@ -57,6 +58,9 @@ export default function Home() {
 
         {/* Top 10 Survivors Leaderboard & Reward Tiers */}
         <LeaderboardSection />
+
+        {/* Community Survivor Chronicles (Horizontal Scroll Layout) */}
+        <SurvivorStories />
 
         {/* Divine Vine Base Deployment Masterclass */}
         <DeployGuideSection />

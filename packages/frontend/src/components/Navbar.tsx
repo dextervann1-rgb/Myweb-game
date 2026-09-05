@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { Shield, Sparkles, Menu, X, Wallet, ChevronRight, Trophy, Star } from 'lucide-react';
+import { Shield, Sparkles, Menu, X, Wallet, ChevronRight, Trophy, Star, BookOpen } from 'lucide-react';
 import SurvivorStatusBadge from './SurvivorStatusBadge';
 
 interface NavbarProps {
@@ -82,6 +82,13 @@ export default function Navbar({ onEnterRealm }: NavbarProps) {
           >
             <Trophy className="w-3.5 h-3.5 text-[#D4AF37]" />
             LEADERBOARD
+          </button>
+          <button 
+            onClick={() => handleNavClick('survivor-stories')} 
+            className="hover:text-[#D4AF37] text-[#F3E5AB] font-bold transition-colors cursor-pointer uppercase flex items-center gap-1"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-[#D4AF37]" />
+            STORIES
           </button>
           <button 
             onClick={() => handleNavClick('aegis-sanctum')} 
@@ -193,6 +200,12 @@ export default function Navbar({ onEnterRealm }: NavbarProps) {
             className="text-left py-2 text-[#D4AF37] hover:text-[#F3E5AB] transition-colors border-b border-[#F5F1E8]/10 flex items-center gap-2"
           >
             <Trophy className="w-4 h-4 text-[#D4AF37]" /> LEADERBOARD & REWARDS
+          </button>
+          <button
+            onClick={() => handleNavClick('survivor-stories')}
+            className="text-left py-2 text-[#F3E5AB] hover:text-[#D4AF37] transition-colors border-b border-[#F5F1E8]/10 flex items-center gap-2"
+          >
+            <BookOpen className="w-4 h-4 text-[#D4AF37]" /> SURVIVOR STORIES & CHRONICLES
           </button>
           <button
             onClick={() => handleNavClick('aegis-sanctum')}
