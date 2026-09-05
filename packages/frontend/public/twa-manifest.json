@@ -1,0 +1,49 @@
+{
+  "packageId": "com.abbadivinevision.omega",
+  "host": "ais-pre-pemresaczxz275bypctych-23696980933.us-east1.run.app",
+  "name": "Abba Divine Vision: ÒMEGA",
+  "launcherName": "ÒMEGA",
+  "display": "standalone",
+  "themeColor": "#0A0E1A",
+  "themeColorDark": "#080B12",
+  "navigationColor": "#080B12",
+  "navigationColorDark": "#05070D",
+  "backgroundColor": "#080B12",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "/icons/icon-512x512.png",
+  "maskableIconUrl": "/icons/icon-512x512.png",
+  "appVersionName": "1.2.0-alpha",
+  "appVersionCode": 10200,
+  "shortcuts": [
+    {
+      "name": "Abba Sanctuary",
+      "short_name": "Sanctuary",
+      "url": "/#abba-vision"
+    },
+    {
+      "name": "Survivor Chronicles",
+      "short_name": "Chronicles",
+      "url": "/#survivor-stories"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": false
+    },
+    "playBilling": {
+      "enabled": false
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "minSdkVersion": 24,
+  "targetSdkVersion": 34
+}

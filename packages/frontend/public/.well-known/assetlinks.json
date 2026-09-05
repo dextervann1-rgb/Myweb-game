@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.abbadivinevision.omega",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:D6:0F:4E:CF:68:8B:E9:EC:00:32:14:6F:84:46:13:54:E6:E5:B3:C2:B1:49:6A:5C:8A:56:49:E1:92"
+      ]
+    }
+  }
+]

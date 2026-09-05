@@ -1,4 +1,6 @@
 {
   "name": "ÒMEGA",
-  "description": "Lore-driven survival universe built on BASE, forged in AI Studios, owned by players, ordained by ABBA."
+  "description": "Lore-driven survival universe built on BASE, forged in AI Studios, owned by players, ordained by ABBA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

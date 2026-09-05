@@ -1,16 +1,21 @@
 {
-  "name": "ÒMEGA - Web3 Business Simulation",
-  "short_name": "OMEGA",
-  "description": "Immersive blockchain-based Business Simulation and Educational Game",
+  "name": "Abba Divine Vision: ÒMEGA",
+  "short_name": "ÒMEGA",
+  "id": "com.abbadivinevision.omega",
+  "description": "Lore-driven survival universe and sanctuary on Base. Built in AI Studios. Ordained by Abba.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F5F1E8",
-  "theme_color": "#0A0A0A",
+  "orientation": "portrait-primary",
+  "categories": ["games", "simulation", "entertainment"],
+  "prefer_related_applications": false,
+  "background_color": "#080B12",
+  "theme_color": "#0A0E1A",
   "icons": [
     {
       "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

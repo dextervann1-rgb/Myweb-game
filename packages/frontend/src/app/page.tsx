@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import WhatIsOmega from "@/components/WhatIsOmega";
@@ -17,8 +18,23 @@ import AegisSanctumProMode from "@/components/AegisSanctumProMode";
 import PlayerRatingSection from "@/components/PlayerRatingSection";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
+import MtaasPlayStoreCompliance from "@/components/MtaasPlayStoreCompliance";
 
 export default function Home() {
+  useEffect(() => {
+    // Register Service Worker for Play Store & PWA offline caching
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((reg) => {
+          console.log('ÒMEGA Service Worker registered with scope:', reg.scope);
+        })
+        .catch((err) => {
+          console.log('Service Worker registration skipped:', err);
+        });
+    }
+  }, []);
+
   const scrollToAlpha = () => {
     const element = document.getElementById('play-alpha');
     if (element) {
@@ -80,6 +96,9 @@ export default function Home() {
 
       {/* Footer */}
       <Footer />
+
+      {/* MTaaS & Google Play Store Compliance Inspector */}
+      <MtaasPlayStoreCompliance />
     </div>
   );
 }
