@@ -23,7 +23,7 @@ export default function Footer() {
             © 2026 ÒMEGA WEB3 | Built on Base | Ordained by ABBA | Stewarded by Vann Family
           </p>
           <p className="text-[11px] font-mono text-[#F5F1E8]/50">
-            Package ID: <code className="text-[#60A5FA]">com.abbadivinevision.omega</code> • Target SDK 34/35 • Zero Broad Storage Permissions
+            Package ID: <code className="text-[#60A5FA]">com.abbadivinevision.omega</code> • Target SDK 36 • Zero Broad Storage Permissions
           </p>
         </div>
 
@@ -44,10 +44,10 @@ export default function Footer() {
           </a>
           <span className="text-[#F5F1E8]/20">•</span>
           <a
-            href="mailto:dextervann1@gmail.com"
+            href="mailto:support@vannfamilyventures.com"
             className="hover:text-[#D4AF37] transition-colors flex items-center gap-1 text-[#60A5FA]"
           >
-            Developer Support (dextervann1@gmail.com)
+            Support: support@vannfamilyventures.com
           </a>
         </div>
 

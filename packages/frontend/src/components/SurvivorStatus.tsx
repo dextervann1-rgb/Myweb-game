@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect, useWriteContract, useReadContract } from 'wagmi';
-import { Shield, Wallet, Sparkles, CheckCircle2, Flame, ArrowRight, Loader2 } from 'lucide-react';
+import { Shield, Wallet, Sparkles, CheckCircle2, Flame, ArrowRight, Loader2, Award } from 'lucide-react';
 
 const GAME_CONTRACT_ABI = [
   {
@@ -160,6 +160,16 @@ export default function SurvivorStatus() {
                 <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
                 <span>NFT MINTED</span>
               </div>
+              <button
+                onClick={() => {
+                  const el = document.getElementById('player-profile-badges');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-3 py-1.5 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black font-mono text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
+              >
+                <Award className="w-3.5 h-3.5" />
+                <span>BADGES</span>
+              </button>
               <button
                 onClick={() => disconnect()}
                 className="text-[10px] font-mono text-[#F5F1E8]/50 hover:text-red-400 underline transition-colors px-1"

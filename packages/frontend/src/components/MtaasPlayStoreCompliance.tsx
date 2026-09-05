@@ -42,11 +42,11 @@ export default function MtaasPlayStoreCompliance() {
     packageName: "com.abbadivinevision.omega",
     versionName: "1.2.0-alpha",
     versionCode: "10200",
-    targetSdk: "API 34 (Android 14) / API 35 Ready",
+    targetSdk: "API 36 (Android 16)",
     minSdk: "API 24 (Android 7.0 Nougat)",
     category: "Games / Role Playing & Simulation",
     contentRating: "Everyone (IARC Certificate Ready)",
-    developerEmail: "dextervann1@gmail.com",
+    developerEmail: "support@vannfamilyventures.com",
     releaseNotes: `[New Release for Abba Divine Vision: ÒMEGA - v1.2.0]
 - Added Survivor Stories horizontal chronicle feed with on-chain testimonials
 - Integrated dynamic search by author address and gameplay keywords
@@ -82,11 +82,11 @@ export default function MtaasPlayStoreCompliance() {
     },
     {
       id: 'chk-4',
-      name: 'Target API 34+ (Android 14/15) Requirement',
+      name: 'Target API 36 (Android 16) Requirement',
       category: 'Policy',
       status: 'passed',
-      description: 'Google Play requires targetSdkVersion >= 34 for all new releases.',
-      details: 'Target SDK level is configured to API 34 (Android 14) with Android 15 compatibility.'
+      description: 'Google Play targetSdkVersion is configured to API 36 for modern Android releases.',
+      details: 'Target SDK level is strictly configured to API 36 (Android 16) in twa-manifest.json and Google Play console specs.'
     },
     {
       id: 'chk-5',
@@ -374,7 +374,7 @@ export default function MtaasPlayStoreCompliance() {
                         ✓ Service Worker Offline Ready
                       </span>
                       <span className="px-2 py-0.5 rounded bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40">
-                        ✓ Target API 34+
+                        ✓ Target API 36
                       </span>
                     </div>
                   </div>
@@ -435,7 +435,10 @@ export default function MtaasPlayStoreCompliance() {
                     <h5 className="font-bold text-white uppercase font-mono">4. Compliance &amp; Developer Contact</h5>
                     <p>
                       For privacy inquiries or compliance verification, contact our steward team directly at: <br />
-                      <strong className="text-[#D4AF37] font-mono">dextervann1@gmail.com</strong>
+                      <a href="mailto:support@vannfamilyventures.com" className="text-[#D4AF37] font-mono hover:underline font-bold">
+                        support@vannfamilyventures.com
+                      </a>
+                      <span className="text-[#F5F1E8]/60 ml-1.5 font-mono text-[11px]">(vannfamilyventures.com)</span>
                     </p>
                   </div>
                 </div>

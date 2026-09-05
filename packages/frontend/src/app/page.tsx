@@ -12,6 +12,7 @@ import RoadmapSection from "@/components/RoadmapSection";
 import InteractiveRealm from "@/components/InteractiveRealm";
 import LeaderboardSection from "@/components/LeaderboardSection";
 import SurvivorStories from "@/components/SurvivorStories";
+import PlayerProfileBadgeSystem from "@/components/PlayerProfileBadgeSystem";
 import DeployGuideSection from "@/components/DeployGuideSection";
 import CompetitionAndSupport from "@/components/CompetitionAndSupport";
 import AegisSanctumProMode from "@/components/AegisSanctumProMode";
@@ -77,6 +78,9 @@ export default function Home() {
 
         {/* Community Survivor Chronicles (Horizontal Scroll Layout) */}
         <SurvivorStories />
+
+        {/* Dynamic Player Profile & Real-Time Badge System (Stories & Leaderboard Unlocks) */}
+        <PlayerProfileBadgeSystem />
 
         {/* Divine Vine Base Deployment Masterclass */}
         <DeployGuideSection />

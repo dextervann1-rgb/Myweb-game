@@ -45,5 +45,5 @@
   "isChromeOSOnly": false,
   "isMetaQuest": false,
   "minSdkVersion": 24,
-  "targetSdkVersion": 34
+  "targetSdkVersion": 36
 }

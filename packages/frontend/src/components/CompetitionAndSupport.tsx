@@ -360,7 +360,12 @@ export default function CompetitionAndSupport() {
 
             <div className="flex items-center justify-between text-[11px] font-mono text-[#F5F1E8]/50 pt-2">
               <span>Verified Council: Vann Family Ventures LLC</span>
-              <span>Direct: dextervann1@gmail.com</span>
+              <a 
+                href="mailto:support@vannfamilyventures.com" 
+                className="text-[#60A5FA] hover:underline"
+              >
+                Direct: support@vannfamilyventures.com
+              </a>
             </div>
           </form>
         )}
