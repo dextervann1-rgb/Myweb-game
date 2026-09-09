@@ -32,7 +32,7 @@ interface PolicyCheckItem {
 
 export default function MtaasPlayStoreCompliance() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'audit' | 'release' | 'privacy' | 'terms' | 'deletion'>('audit');
+  const [activeTab, setActiveTab] = useState<'audit' | 'release' | 'capacitor' | 'privacy' | 'terms' | 'deletion'>('audit');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [purgeSuccess, setPurgeSuccess] = useState(false);
 
@@ -207,6 +207,18 @@ export default function MtaasPlayStoreCompliance() {
               >
                 <Smartphone className="w-3.5 h-3.5 text-[#60A5FA]" />
                 <span>PLAY CONSOLE AAB RELEASE</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab('capacitor')}
+                className={`px-3.5 py-2 rounded-t-xl font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
+                  activeTab === 'capacitor'
+                    ? 'bg-[#090D16] text-[#FFD700] border-t-2 border-x border-[#D4AF37]/40 border-b-0'
+                    : 'text-[#F5F1E8]/60 hover:text-white'
+                }`}
+              >
+                <Code className="w-3.5 h-3.5 text-[#10B981]" />
+                <span>CAPACITOR &amp; DEEP LINK CLI</span>
               </button>
 
               <button
@@ -401,6 +413,157 @@ export default function MtaasPlayStoreCompliance() {
                       <code className="text-[#D4AF37] font-mono text-[10px]">app/build/outputs/bundle/release/app-release.aab</code>
                     </p>
                   </div>
+                </div>
+              )}
+
+              {/* TAB: CAPACITOR & DEEP LINK CLI PIPELINE */}
+              {activeTab === 'capacitor' && (
+                <div className="space-y-6 font-mono">
+                  <div className="p-4 rounded-2xl bg-[#080B12] border border-[#10B981]/40 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-bold text-white uppercase text-[#10B981] flex items-center gap-2">
+                        <Code className="w-4 h-4 text-[#10B981]" />
+                        Capacitor &amp; Android Build Pipeline
+                      </h4>
+                      <span className="px-2.5 py-0.5 rounded bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40 text-[10px] font-bold">
+                        CONFIGURED &amp; READY
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#F5F1E8]/70 font-sans">
+                      Complete end-to-end command sequence for compiling the web frontend, syncing native Android assets, building debug/release APKs/AABs, testing wallet-return deep links, and generating your Play Store production keystore.
+                    </p>
+                  </div>
+
+                  {/* 1. All-in-one execution box */}
+                  <div className="p-4 rounded-2xl bg-[#05070D] border border-white/10 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-white uppercase flex items-center gap-2">
+                        <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        Complete Terminal Build Sequence
+                      </span>
+                      <button
+                        onClick={() => handleCopy(`npm run build
+npx cap sync android
+cd android
+./gradlew assembleDebug
+adb shell am start \\
+  -a android.intent.action.VIEW \\
+  -d "omega://wallet-return"
+keytool -genkeypair \\
+  -v \\
+  -keystore omega-release.keystore \\
+  -alias omega \\
+  -keyalg RSA \\
+  -keysize 2048 \\
+  -validity 10000`, 'all_commands')}
+                        className="px-2.5 py-1 rounded-lg bg-[#D4AF37]/20 hover:bg-[#D4AF37]/40 text-[#FFD700] text-[11px] font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                      >
+                        {copiedKey === 'all_commands' ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                        <span>{copiedKey === 'all_commands' ? 'COPIED ALL' : 'COPY FULL SEQUENCE'}</span>
+                      </button>
+                    </div>
+
+                    <pre className="p-3.5 rounded-xl bg-black border border-white/15 text-[11px] text-[#10B981] overflow-x-auto leading-relaxed whitespace-pre font-mono">
+{`# 1. Compile Next.js frontend assets
+npm run build
+
+# 2. Sync web bundle to native Android project
+npx cap sync android
+
+# 3. Enter Android project directory
+cd android
+
+# 4. Compile debug APK
+./gradlew assembleDebug
+
+# 5. Test Deep Link wallet callback via ADB
+adb shell am start \\
+  -a android.intent.action.VIEW \\
+  -d "omega://wallet-return"
+
+# 6. Generate Google Play production release signing keystore
+keytool -genkeypair \\
+  -v \\
+  -keystore omega-release.keystore \\
+  -alias omega \\
+  -keyalg RSA \\
+  -keysize 2048 \\
+  -validity 10000`}
+                    </pre>
+                  </div>
+
+                  {/* 2. Interactive Deep Link Tester */}
+                  <div className="p-4 rounded-2xl bg-[#090E1A] border border-[#0052FF]/40 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h5 className="text-xs font-bold text-white uppercase flex items-center gap-2">
+                        <Smartphone className="w-4 h-4 text-[#0052FF]" />
+                        Deep Link Intent: omega://wallet-return
+                      </h5>
+                      <span className="text-[10px] text-[#60A5FA]">EVM Wallet Handshake</span>
+                    </div>
+                    <p className="text-xs text-[#F5F1E8]/70 font-sans">
+                      When a mobile survivor signs on Base L2 using MetaMask, Rainbow, or Coinbase Wallet, the external wallet fires an Android intent to return to ÒMEGA:
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-3 pt-1">
+                      <button
+                        onClick={() => {
+                          if (typeof window !== 'undefined') {
+                            const event = new CustomEvent('omega:deeplink', {
+                              detail: { url: 'omega://wallet-return?status=success&tx=0x7b1c4e...' }
+                            });
+                            window.dispatchEvent(event);
+                            handleCopy('adb shell am start -a android.intent.action.VIEW -d "omega://wallet-return"', 'adb_test');
+                          }
+                        }}
+                        className="px-3.5 py-2 rounded-xl bg-[#0052FF] hover:bg-blue-600 text-white font-bold text-xs uppercase cursor-pointer flex items-center gap-2 transition-all shadow"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>TEST DEEP LINK RETURN IN APP</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleCopy('adb shell am start -a android.intent.action.VIEW -d "omega://wallet-return"', 'adb_copy')}
+                        className="px-3 py-2 rounded-xl bg-black/60 hover:bg-black text-[#F5F1E8] border border-white/20 text-xs font-bold uppercase cursor-pointer flex items-center gap-1.5"
+                      >
+                        {copiedKey === 'adb_copy' ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Copy className="w-3.5 h-3.5 text-[#D4AF37]" />}
+                        <span>COPY ADB COMMAND</span>
+                      </button>
+                    </div>
+
+                    <div className="p-2.5 rounded-lg bg-black/40 text-[10px] text-white/60 space-y-1">
+                      <div><strong>Intent Action:</strong> <code className="text-[#60A5FA]">android.intent.action.VIEW</code></div>
+                      <div><strong>Scheme:</strong> <code className="text-[#D4AF37]">omega</code> | <strong>Host:</strong> <code className="text-[#10B981]">wallet-return</code></div>
+                      <div><strong>Activity:</strong> <code className="text-white">com.abbadivinevision.omega.MainActivity</code></div>
+                    </div>
+                  </div>
+
+                  {/* 3. Keystore & Play Console Signing Guide */}
+                  <div className="p-4 rounded-2xl bg-[#080B12] border border-[#D4AF37]/30 space-y-3 font-sans">
+                    <h5 className="text-xs font-mono font-bold text-[#D4AF37] uppercase flex items-center gap-2">
+                      <Lock className="w-4 h-4 text-[#D4AF37]" />
+                      Release Keystore &amp; SHA-256 Fingerprint Specifications
+                    </h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-[11px]">
+                      <div className="p-2.5 rounded-xl bg-black/50 border border-white/10">
+                        <span className="text-white/40 block text-[10px]">KEYSTORE FILE</span>
+                        <span className="text-white font-bold">omega-release.keystore</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-black/50 border border-white/10">
+                        <span className="text-white/40 block text-[10px]">KEY ALIAS</span>
+                        <span className="text-[#D4AF37] font-bold">omega</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-black/50 border border-white/10">
+                        <span className="text-white/40 block text-[10px]">ALGORITHM &amp; SIZE</span>
+                        <span className="text-white font-bold">RSA 2048-bit</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-black/50 border border-white/10">
+                        <span className="text-white/40 block text-[10px]">VALIDITY PERIOD</span>
+                        <span className="text-[#10B981] font-bold">10,000 days (~27 years)</span>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               )}
 

@@ -17,11 +17,15 @@ import DeployGuideSection from "@/components/DeployGuideSection";
 import CompetitionAndSupport from "@/components/CompetitionAndSupport";
 import AegisSanctumProMode from "@/components/AegisSanctumProMode";
 import PlayerRatingSection from "@/components/PlayerRatingSection";
+import DeveloperDossier from "@/components/DeveloperDossier";
+import ExecutiveValuationSuite from "@/components/ExecutiveValuationSuite";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import MtaasPlayStoreCompliance from "@/components/MtaasPlayStoreCompliance";
 
 export default function Home() {
+  const [deepLinkNotification, setDeepLinkNotification] = React.useState<string | null>(null);
+
   useEffect(() => {
     // Register Service Worker for Play Store & PWA offline caching
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
@@ -33,6 +37,23 @@ export default function Home() {
         .catch((err) => {
           console.log('Service Worker registration skipped:', err);
         });
+    }
+
+    // Check for Deep Link Wallet Return (omega://wallet-return or URL query parameters)
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('wallet') === 'return' || window.location.hash.includes('wallet-return')) {
+        setDeepLinkNotification('omega://wallet-return • Web3 Sovereign Session Re-established with Base L2!');
+      }
+
+      // Listen for custom app deep link event
+      const handleCustomDeepLink = (e: CustomEvent<{ url: string }>) => {
+        setDeepLinkNotification(`Deep link received: ${e.detail.url}`);
+      };
+      window.addEventListener('omega:deeplink' as any, handleCustomDeepLink as EventListener);
+      return () => {
+        window.removeEventListener('omega:deeplink' as any, handleCustomDeepLink as EventListener);
+      };
     }
   }, []);
 
@@ -47,6 +68,26 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-[#080B12] text-[#F5F1E8] selection:bg-[#D4AF37] selection:text-[#0A0A0A]">
       {/* Navigation Header */}
       <Navbar onEnterRealm={scrollToAlpha} />
+
+      {deepLinkNotification && (
+        <div className="mx-4 sm:mx-8 mt-4 p-4 rounded-2xl bg-gradient-to-r from-[#D4AF37]/20 via-[#0052FF]/20 to-[#10B981]/20 border-2 border-[#D4AF37] shadow-[0_0_30px_rgba(212,175,55,0.4)] flex items-center justify-between gap-4 font-mono text-xs animate-in slide-in-from-top-4 duration-300">
+          <div className="flex items-center gap-3">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-ping shrink-0" />
+            <div>
+              <span className="text-[#D4AF37] font-black uppercase block text-[11px]">
+                ⚡ ANDROID NATIVE DEEP LINK INTERCEPTED
+              </span>
+              <span className="text-white font-bold">{deepLinkNotification}</span>
+            </div>
+          </div>
+          <button
+            onClick={() => setDeepLinkNotification(null)}
+            className="px-3 py-1 rounded-lg bg-black/60 hover:bg-black text-[#F5F1E8] border border-white/20 text-[10px] uppercase font-bold cursor-pointer"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
 
       <main className="flex-1 space-y-8 sm:space-y-16 pb-16">
         {/* 1. Hero Section */}
@@ -93,6 +134,12 @@ export default function Home() {
 
         {/* Player Rating & Community Pilgrim Reviews */}
         <PlayerRatingSection />
+
+        {/* Executive Sovereign Developer Dossier, Skill Set, Vision & Legal Bio */}
+        <DeveloperDossier />
+
+        {/* Executive CTR IP Valuation, VFV Invoice, Court Deck & 0-3 Year Scalability Waterfall */}
+        <ExecutiveValuationSuite />
 
         {/* 8. Final CTA */}
         <FinalCTA />

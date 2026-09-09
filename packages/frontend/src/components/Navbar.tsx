@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { Shield, Sparkles, Menu, X, Wallet, ChevronRight, Trophy, Star, BookOpen, Award, Heart } from 'lucide-react';
+import { Shield, Sparkles, Menu, X, Wallet, ChevronRight, Trophy, Star, BookOpen, Award, Heart, Crown, Scale } from 'lucide-react';
 import SurvivorStatusBadge from './SurvivorStatusBadge';
 
 interface NavbarProps {
@@ -117,6 +117,20 @@ export default function Navbar({ onEnterRealm }: NavbarProps) {
           >
             <Heart className="w-3.5 h-3.5 text-[#D4AF37]" />
             PRAYER WALL
+          </button>
+          <button 
+            onClick={() => handleNavClick('developer-dossier')} 
+            className="hover:text-[#F3E5AB] text-[#D4AF37] font-bold transition-colors cursor-pointer uppercase flex items-center gap-1"
+          >
+            <Crown className="w-3.5 h-3.5 text-[#D4AF37]" />
+            ARCHITECT BIO
+          </button>
+          <button 
+            onClick={() => handleNavClick('executive-valuation-suite')} 
+            className="hover:text-white text-[#10B981] font-bold transition-colors cursor-pointer uppercase flex items-center gap-1"
+          >
+            <Scale className="w-3.5 h-3.5 text-[#10B981]" />
+            CTR VALUATION
           </button>
           <button 
             onClick={() => handleNavClick('deploy-guide')} 
@@ -244,6 +258,18 @@ export default function Navbar({ onEnterRealm }: NavbarProps) {
             className="text-left py-2 text-[#F3E5AB] hover:text-[#D4AF37] transition-colors border-b border-[#F5F1E8]/10 flex items-center gap-2"
           >
             <Heart className="w-4 h-4 text-[#D4AF37]" /> ABBA PRAYER WALL &amp; PRAISE REPORTS
+          </button>
+          <button
+            onClick={() => handleNavClick('developer-dossier')}
+            className="text-left py-2 text-[#F3E5AB] hover:text-[#D4AF37] transition-colors border-b border-[#F5F1E8]/10 flex items-center gap-2"
+          >
+            <Crown className="w-4 h-4 text-[#D4AF37]" /> ARCHITECT DOSSIER &amp; BIO
+          </button>
+          <button
+            onClick={() => handleNavClick('executive-valuation-suite')}
+            className="text-left py-2 text-[#10B981] hover:text-white transition-colors border-b border-[#F5F1E8]/10 flex items-center gap-2 font-bold"
+          >
+            <Scale className="w-4 h-4 text-[#10B981]" /> CTR IP VALUATION &amp; VFV INVOICE
           </button>
           <button
             onClick={() => handleNavClick('deploy-guide')}

@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import CleanQueensMaintenance from './CleanQueensMaintenance';
 import AegisArmyBouncerIntercom from './AegisArmyBouncerIntercom';
+import AegisCommandCenter from './AegisCommandCenter';
 
 interface SecurityAgent {
   id: string;
@@ -323,6 +324,15 @@ export default function AegisSanctumProMode() {
               POA Maddy May Heartbeat: Active ({activeQueueTime}s Session)
             </div>
           </div>
+        </div>
+
+        {/* Aegis Command Center: Hospital-Style Health Monitor Graph & AI Agent Distress Pulse */}
+        <div className="mt-10">
+          <AegisCommandCenter
+            distressModeActive={distressModeActive}
+            onToggleDistressMode={toggleDistressMode}
+            onLogMessage={(msg) => setLogs((prev) => [msg, ...prev.slice(0, 5)])}
+          />
         </div>
 
         {/* 'Aegis Army' AI Bouncer & Struggle Radar Intercom */}

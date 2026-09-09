@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ÒMEGA</string>
+    <string name="play_store_title">Abba Divine Vision: ÒMEGA</string>
+    <string name="title_activity_main">Abba Divine Vision: ÒMEGA</string>
+    <string name="package_name">com.abbadivinevision.omega</string>
+    <string name="custom_url_scheme">omega</string>
+</resources>

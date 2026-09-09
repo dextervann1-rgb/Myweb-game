@@ -1,0 +1,21 @@
+{
+  "appId": "com.abbadivinevision.omega",
+  "appName": "Abba Divine Vision: ÒMEGA",
+  "webDir": "packages/frontend/out",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "allowNavigation": [
+      "ais-pre-pemresaczxz275bypctych-23696980933.us-east1.run.app",
+      "ais-dev-pemresaczxz275bypctych-23696980933.us-east1.run.app",
+      "base.org",
+      "basescan.org"
+    ]
+  },
+  "android": {
+    "buildOptions": {
+      "keystorePath": "omega-release.keystore",
+      "keystoreAlias": "omega"
+    }
+  }
+}

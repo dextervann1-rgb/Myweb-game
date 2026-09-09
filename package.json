@@ -3,9 +3,10 @@
   "private": true,
   "packageManager": "npm@10.8.2",
   "scripts": {
-    "build": "npm --prefix packages/frontend run build",
+    "build": "NODE_ENV=production npm --prefix packages/frontend run build",
     "dev": "npm --prefix packages/frontend run dev",
-    "lint": "npm --prefix packages/frontend run lint"
+    "lint": "npm --prefix packages/frontend run lint",
+    "test": "node --test test/*.test.mjs"
   },
   "workspaces": [
     "packages/*"
