@@ -6,7 +6,9 @@
     "build": "NODE_ENV=production npm --prefix packages/frontend run build",
     "dev": "npm --prefix packages/frontend run dev",
     "lint": "npm --prefix packages/frontend run lint",
-    "test": "node --test test/*.test.mjs"
+    "test": "node --test test/*.test.mjs",
+    "build:aab": "cd android && ./gradlew bundleRelease",
+    "build:aab:debug": "cd android && ./gradlew bundleDebug"
   },
   "workspaces": [
     "packages/*"

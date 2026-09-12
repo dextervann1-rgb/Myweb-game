@@ -37,6 +37,18 @@ test('Capacitor Configuration & App Identity', () => {
   assert.ok(capConfig.server?.allowNavigation?.includes('base.org'), 'Must allow Base L2 navigation');
 });
 
+test('Application ID Consistency & AAB Packaging', () => {
+  const gradleApp = fs.readFileSync('android/app/build.gradle', 'utf8');
+  assert.match(gradleApp, /applicationId\s+"com\.abbadivinevision\.omega"/, 'Application ID must be com.abbadivinevision.omega');
+  assert.match(gradleApp, /namespace\s+"com\.abbadivinevision\.omega"/, 'Namespace must match');
+  
+  const twaManifest = JSON.parse(fs.readFileSync('packages/frontend/public/twa-manifest.json', 'utf8'));
+  assert.equal(twaManifest.packageId, 'com.abbadivinevision.omega', 'TWA packageId must match Application ID');
+
+  const pkgJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+  assert.ok(pkgJson.scripts['build:aab'], 'AAB build script must be defined in package.json');
+});
+
 test('Frontend Production Build Verification', () => {
   assert.ok(fs.existsSync('packages/frontend/.next'), 'Frontend .next build directory must exist');
 });
